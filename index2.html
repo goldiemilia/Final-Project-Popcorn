@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/baeb0eeb42.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style2.css">
+  <script src="index2.js" defer></script>
+  <title>User Posts</title>
+</head>
+
+<body>
+    <section id="landing">
+        <div class="image-container">
+          <img class="background-image" src="/Assets/Movie Banner Popcorn.jpg" alt="Background Image">
+          <div class="overlay"></div>
+        </div>
+            <header class="navbar">
+                <div class="nav-logo">
+                    <img class="logo-img" src="/Assets/Popcorn.png" alt="Popcorn Logo">
+                    <h2><b class="nav-title" style="color: orange;">popcorn</b></h2>
+                </div>
+                <div class="nav-links">
+                    <a href="/" class="
+                        nav__link--anchor
+                        link__hover-effect
+                        link__hover-effect--black
+                        ">Home
+                    </a>
+                    <a href="/" class="
+                        nav__link--anchor
+                        link__hover-effect
+                        link__hover-effect--black
+                        ">Movies
+                    </a>
+                    <a class="btn-contact">CONTACT</a>
+                </div>
+                <div id="phone-nav">
+                    <button class="burger-menu" onclick="openMenu()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="menu__backdrop">
+                        <button class="burger__menu btn__menu--close" onclick="closeMenu()">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                        <ul class="menu-links">
+                            <li class="menu__list"><a href="#" class="menu__link" onclick="closeMenu()">Home</a></li>
+                            <li class="menu__list"><a href="#s" class="menu__link" onclick="closeMenu()">Movies</a></li>
+                            <li class="menu__list"><a href="#s" class="menu__link" onclick="closeMenu()">Contact</a></li>
+                        </ul>
+                    </div>
+                </div> 
+        </header>
+        <div class="content-wrapper">
+            <div class="flex flex-col align-center" style="z-index: 10;">
+                <div Text&Input style="width:100%;">
+                    <div h1 class="h1-landing-page" style="width:100%;">
+                        <div h1-animation class="animation-duration: 1500ms; transition-duration: 1500ms; animation-delay: 300ms; transition-delay: 300ms; width: 100%;">
+                            <h1 style="animation-duration: 1500ms; transition-duration: 1500ms; animation-delay: 300ms; transition-delay: 300ms; width: 100%;">Browse Our <span style="color: orange;">Films</span></h1>
+                        </div>
+                    </div>
+                    <div input style="">
+                        <div input-animation style="animation-duration: 1500ms; transition-duration: 1500ms; animation-delay: 1100ms; transition-delay: 1100ms; width: 100%;">
+                            <div class="input-wrapper">
+                                <input class="searchbar" placeholder="Search by Name or Keyword"></input>
+                                <button id="searchBtn" class="search-button">
+                                  <i id="icon1" class="fa-solid fa-magnifying-glass" ></i>
+                                  <i id="icon2" class="fa-duotone fa-solid fa-spinner" style="display: none;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="recent">
+    <div class="container">
+     <div class="row">
+         <div class="movies__header"></div>
+             <h2 class="section__title">All<span class="orange"> Movies</span></h2>
+             <select id="filter" onchange="filterFilms(event)">
+                 <option value="" disabled selected>Sort</option>
+                 <option value="z_to_a">Title Z-A</option>
+                 <option value="a_to_z">Title A-Z</option>
+                 <option value="rating">Rating</option>
+             </select>
+         </div>
+         <div class="Films Films__loading">
+             <i class="fas fa-spinner Films__loading--spinner"></i>
+         </div>
+     </div>
+    </div>
+    </section>
+      <section>
+        <div class="container">
+          <div class="row">
+            <div class="Film-list">
+              <div class="Film">
+                <div class="Film-card">
+                  <div class="Film-card__container">
+                    <h3 class="Film__title">Film Title</h3>
+                      <p><b>Genre:</b> Action</p>
+                      <p class="Film__ratings"><b>IMDb Rating:</b> 8.5</p>
+                      <img id="dynamicImage" class="Film-image" src="" alt="Dynamic Image Will Appear Here">
+                      <script src="index2.js"></script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</body>
+<script src="index2.js"></script>
+
+</html>

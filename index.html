@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popcorn</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/baeb0eeb42.js" crossorigin="anonymous"></script>
+    <script src="index.js" defer></script>
+</head>
+<body>
+    <section id="landing">
+        <header class="navbar">
+            <div class="nav-logo">
+                <img class="logo-img" src="/Assets/Popcorn.png" alt="Popcorn Logo">
+                <h2><b class="nav-title" style="color: orange;">popcorn</b></h2>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="
+                    nav__link--anchor
+                    link__hover-effect
+                    link__hover-effect--black
+                    ">Home
+                </a>
+                <a href="/" class="
+                    nav__link--anchor
+                    link__hover-effect
+                    link__hover-effect--black
+                    ">Movies
+                </a>
+                <a class="btn-contact">CONTACT</a>
+            </div>
+            <div id="phone-nav">
+                <button class="burger-menu" onclick="openMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="menu__backdrop">
+                    <button class="burger__menu btn__menu--close" onclick="closeMenu()">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                    <ul class="menu-links">
+                        <li class="menu__list"><a href="#" class="menu__link" onclick="closeMenu()">Home</a></li>
+                        <li class="menu__list"><a href="#s" class="menu__link" onclick="closeMenu()">Movies</a></li>
+                        <li class="menu__list"><a href="#s" class="menu__link" onclick="closeMenu()">Contact</a></li>
+                    </ul>
+                </div>
+            </div> 
+        </header>
+        <div class="content-wrapper">
+            <div class="flex flex-col align-center" style="z-index: 10;">
+                <div Text&Input style="width:100%;">
+                    <div h1 class="h1-landing-page" style="width:100%;">
+                        <div h1-animation class="animation-duration: 1500ms; transition-duration: 1500ms; animation-delay: 300ms; transition-delay: 300ms; width: 100%;">
+                            <h1 style="animation-duration: 1500ms; transition-duration: 1500ms; animation-delay: 300ms; transition-delay: 300ms; width: 100%;">Bringing Hollywood straight to you. What are we <span style="color: orange;">watching tonight?</span></h1>
+                        </div>
+                    </div>
+                    <div h2 style="width:100%;">
+                        <div class="animation-duration: 1500ms; transition-duration: 1500ms; animation-delay: 600ms; transition-delay: 600ms; width: 100%;">
+                            <h2 class="h2-animation" >EACH FILM IS POPPIN' WITH <span style="color: orange;">POPCORN</span></h2>
+                        </div>
+                    </div>
+                    <div input style="">
+                        <div input-animation style="animation-duration: 1500ms; transition-duration: 1500ms; animation-delay: 1100ms; transition-delay: 1100ms; width: 100%;">
+                            <div class="input-wrapper">
+                                <input class="searchbar" placeholder="Search by Name or Keyword"></input>
+                                <button id="searchBtn" class="search-button">
+                                  <i id="icon1" class="fa-solid fa-magnifying-glass" ></i>
+                                  <i id="icon2" class="fa-duotone fa-solid fa-spinner" style="display: none;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img class="film" src="/Assets/Film.gif" alt="">
+        </div>
+        <div class="kernal-wrapper">
+            <div class="rolling-images" id="rolling-images">
+                <img src="/Assets/Kernal 1.png" class="rolling-image rolling-image--1" alt="Rolling Object" id="rolling-image">
+                <img src="/Assets/Kernal 2.png" class="rolling-image rolling-image--2" alt="Rolling Object" id="rolling-image">
+                <img src="/Assets/Kernal 3.png" class="rolling-image rolling-image--3" alt="Rolling Object" id="rolling-image">
+                <img src="/Assets/Kernal 4.png" class="rolling-image rolling-image--4" alt="Rolling Object" id="rolling-image">
+                <img src="/Assets/Kernal 5.png" class="rolling-image rolling-image--5" alt="Rolling Object" id="rolling-image">
+                <img src="/Assets/Kernal 6.png" class="rolling-image rolling-image--6" alt="Rolling Object" id="rolling-image">
+                <img src="/Assets/Kernal 7.png" class="rolling-image rolling-image--7" alt="Rolling Object" id="rolling-image">
+            </div>
+        </div>
+    </section>    
+</body>
+</html>
