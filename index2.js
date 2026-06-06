@@ -2,116 +2,84 @@
 // API 2: "https://jsonplaceholder.typicode.com/posts?userId=:id"
 
 
-function openMenu() {
-    document.body.classList += " menu--open";
-}
+// 1. Global Selectors & Data Storage
+const filmListEl = document.querySelector(".Film-list");
+let filmsData = []; 
 
-function closeMenu() {
-    document.body.classList.remove("menu--open");
-}
-
-
-const FilmListEl = document.querySelector(".Film-list");
-
-
-let FilmsData = []; // Declare FilmsData globally
-
-async function main() {
+// 2. Fetch and Initialize Application
+async function initApp() {
+  try {
     const response = await fetch("https://gist.githubusercontent.com/saniyusuf/406b843afdfb9c6a86e25753fe2761f4/raw/075b6aaba5ee43554ecd55006e5d080a8acf08fe/Film.JSON");
-    FilmsData = await response.json(); // Use 'response' instead of 'Film'
-    renderFilms(); // Call renderFilms after fetching data
-
-    FilmListEl.innerHTML = FilmsData.map((Film) => FilmHTML(Film)).join(""); // Use 'FilmsData'
+    filmsData = await response.json();
+    renderFilms(); // Render initial list once data arrives
+  } catch (error) {
+    console.error("Error loading films:", error);
+    filmListEl.innerHTML = "<p>Failed to load films.</p>";
+  }
 }
 
-main();
+// 3. Centralized Render Function (Handles Sorting & UI Generation)
+function renderFilms(sortBy) {
+  // Show loading spinner if data hasn't arrived yet
+  if (filmsData.length === 0) {
+    filmListEl.innerHTML = '<i class="fas fa-spinner Films__loading--spinner"></i>';
+    return;
+  }
 
+  // Clone data array to avoid mutating the original global list
+  let sortedFilms = [...filmsData];
 
-function showFilmPosts(Film) {
-    localStorage.setItem("Film", JSON.stringify(Film));
-    window.location.href = `${window.location.origin}/Film.html`
+  // Apply sorting algorithms
+  if (sortBy === 'a_to_z') {
+    sortedFilms.sort((a, b) => a.Title.localeCompare(b.Title));
+  } else if (sortBy === 'z_to_a') {
+    sortedFilms.sort((a, b) => b.Title.localeCompare(a.Title));
+  }
+    else if (sortBy === 'Newest_To_Oldest') {
+    sortedFilms.sort((a, b) => new Date(b.Released) - new Date(a.Released));
+  }
+    else if (sortBy === 'Oldest_To_Newest') {
+    sortedFilms.sort((a, b) => new Date(a.Released) - new Date(b.Released));
 }
 
-
-function FilmHTML(Film) {
-    return `<div class="Film-card" onclick="showFilmPosts(${Film.Title})">
+  // Generate HTML combining the best elements of your original layouts
+  filmListEl.innerHTML = sortedFilms.map((film) => {
+    // Escape single/double quotes in title to prevent breaking the HTML attribute string
+    const escapedTitle = film.Title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    
+    return `
+      <div class="Film-card" onclick="showFilmPosts('${escapedTitle}')">
         <div class="Film-card__container">
-          <h3>${Film.Title}</h3>
-            <p><b>Genre:</b> ${Film.Genre}</p>
-            <p><b>IMDb Rating:</b> ${Film.imdbRating}</p>
-            <img src="${Film.Images}" alt="Poster for ${Film.Title} Poster">
+          <h3>${film.Title}</h3>
+          <p><b>Genre:</b> ${film.Genre}</p>
+          <p><b>IMDb Rating:</b> ${film.imdbRating || film.Rating || 'N/A'}</p>
+          <p><b>Year:</b> ${film.Year || (film.Released ? new Date(film.Released).getFullYear() : 'N/A')}</p> 
+          <img src="${film.Images?.[0] || film.Poster || ''}" alt="Poster for ${film.Title}">
         </div>
-    </div>`;
-}
-//
-//// script.js
-fetch('https://gist.githubusercontent.com/saniyusuf/406b843afdfb9c6a86e25753fe2761f4/raw/075b6aaba5ee43554ecd55006e5d080a8acf08fe/Film.JSON') // Replace with your actual API URL
-    .then(response => response.json())
-    .then(data => {
-        // Assuming the API response has a "Poster" key
-        const imageUrl = data.Poster; // Extract the URL from the poster key
-        document.getElementById('moviePoster').src = imageUrl; // Set the image src
-    })
-    .catch(error => {
-        console.error('Error fetching the image:', error);
-    });
-//
-////
-////copied from ecommerce//
-//
-
-
-let Films = renderFilms();
-//
-
-async function renderFilms(sortBy) {
-    const FilmsWrapper = document.querySelector(".Film-list");
-
-    // Show loading indicator while fetching data
-    FilmsWrapper.innerHTML = '<i class="fas fa-spinner Films__loading--spinner"></i>';
-
-    // Fetch films only if not previously fetched
-    if (FilmsData.length === 0) { // Check if FilmsData is empty
-        await getFilms(); // Fetch films if not already done
-    }
-
-    // Create a copy of the FilmsData array to sort
-    let sortedFilms = [...FilmsData];
-
-    // Sorting logic based on the selected criteria
-    if (sortBy === 'a_to_z') {
-        sortedFilms.sort((a, b) => a.Title.localeCompare(b.Title)); // A-Z
-    } else if (sortBy === 'z_to_a') {
-        sortedFilms.sort((a, b) => b.Title.localeCompare(a.Title)); // Z-A
-    }
-
-    // Create HTML for each film
-    const FilmsHtml = sortedFilms.map((Film) => {
-        return `
-        <div class="Film-card">
-            <h3>${Film.Title}</h3>
-            <p>Rating: ${Film.Rating}</p>
-            <p>Release Date: ${Film.ReleaseDate}</p>
-        </div>
-        `;
-    }).join("");
-
-    // Insert the generated HTML into the DOM
-    FilmsWrapper.innerHTML = FilmsHtml;
+      </div>
+    `;
+  }).join("");
 }
 
-
-// Update the filterFilms function to pass the selected value
+// 4. Interaction Events & Routing Helpers
 function filterFilms(event) {
-    renderFilms(event.target.value); // Call renderFilms with the selected value
+  renderFilms(event.target.value);
 }
 
-// Call this on page load to render films initially
-document.addEventListener("DOMContentLoaded", () => {
-    renderFilms(); // This will execute when the DOM is fully loaded
-});
+function showFilmPosts(filmTitle) {
+  // Find the exact film object by title to save it
+  const selectedFilm = filmsData.find(f => f.Title === filmTitle);
+  if (selectedFilm) {
+    localStorage.setItem("Film", JSON.stringify(selectedFilm));
+    window.location.href = `${window.location.origin}/Film.html`;
+  }
+}
 
+function openMenu() { document.body.classList.add("menu--open"); }
+function closeMenu() { document.body.classList.remove("menu--open"); }
 
+// 5. Start App on Page Load
+document.addEventListener("DOMContentLoaded", initApp);
 
 
 //
