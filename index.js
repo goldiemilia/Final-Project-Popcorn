@@ -9,13 +9,21 @@ const target = document.getElementById('rolling-images');
 const icon1 = document.getElementById("icon1");
 const icon2 = document.getElementById("icon2");
 
+// Global flag to track if a search sequence is currently running
+let isSearching = false;
+
 // 2. Build the main execution sequence
 function runSearchSequence() {
+  // If already animating, block additional triggers safely without breaking the listener
+  if (isSearching) return;
+  isSearching = true;
+
   const searchTerm = searchInput ? searchInput.value.trim() : "";
 
   // A. Trigger all visual effects immediately
-
-  searchButton.classList.add("clicked");
+  if (searchButton) {
+    searchButton.classList.add("clicked");
+  }
   
   if (target) {
     target.classList.add('animate-now');
@@ -24,7 +32,7 @@ function runSearchSequence() {
   // B. Swap icons safely without relying on unstable inline style checks
   if (icon1 && icon2) {
     icon1.style.display = "none";         // Hide magnifying glass
-    icon2.style.display = "inline-block"; // Show spinner (or default back to "")
+    icon2.style.display = "inline-block"; // Show spinner
     icon2.classList.add("icon-spin");     // Start spinning
   }
 
@@ -40,12 +48,15 @@ function runSearchSequence() {
 
 // 3. Attach unified action event listeners
 if (searchButton) {
-  searchButton.addEventListener('click', runSearchSequence, { once: true });
+  // REMOVED { once: true } so the button never breaks or permanently deactivates
+  searchButton.addEventListener('click', runSearchSequence);
 }
 
 if (searchInput) {
   searchInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
+      // FIXED: Stops the browser from refreshing the page on Enter key press
+      event.preventDefault(); 
       runSearchSequence();
     }
   });
